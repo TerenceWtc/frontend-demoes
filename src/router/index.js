@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import layout from '@/views/layout/index'
 import home from '@/views/home/index'
 import dateTime from '@/views/dateTime/index'
 
@@ -10,6 +11,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'layout',
+      component: layout
+    },
+    {
+      path: '/home',
       name: 'home',
       component: home
     },
