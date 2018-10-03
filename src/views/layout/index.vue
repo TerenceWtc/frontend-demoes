@@ -1,14 +1,12 @@
 <template>
   <div class="layout-container">
     <el-container>
-      <el-header>
-        <navbar class="navbar-container"/>
-      </el-header>
       <el-container>
         <el-aside width="260px">
           <sidebar class="sidebar-container"/>
         </el-aside>
         <el-main>
+          <navbar class="navbar-container"/>
           <contents class="contents-container"/>
         </el-main>
       </el-container>
