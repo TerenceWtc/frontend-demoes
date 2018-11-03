@@ -14,13 +14,23 @@
   width: 100%;
 }
 
-.navbar-container {
-  width: 100%;
+.asidebar {
+  width: 260px;
+  transition: width 0.38s ease-out;
+}
+
+.hideSidebar {
+  width: 0px !important;
 }
 
 .sidebar-container {
   height: 100%;
 }
 
-// .contents-container {
-// }
+.navbar-container {
+  width: 100%;
+}
+
+.contents-container {
+  margin: 0 10px;
+}

@@ -2,7 +2,7 @@
   <div class="layout-container">
     <el-container>
       <el-container>
-        <el-aside width="260px">
+        <el-aside class="asidebar" :class="{hideSidebar: sidebar.opened}">
           <sidebar class="sidebar-container"/>
         </el-aside>
         <el-main>
@@ -24,6 +24,11 @@ export default {
     'navbar': Navbar,
     'sidebar': Sidebar,
     'contents': Contents
+  },
+  computed: {
+    sidebar () {
+      return this.$store.getters.sidebar
+    }
   }
 }
 </script>

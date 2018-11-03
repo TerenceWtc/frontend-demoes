@@ -1,0 +1,16 @@
+.el-menu {
+  border-bottom: 0px;
+}
+
+.left-menu {
+  display: block;
+  float: left;
+  outline: none;
+}
+
+.right-menu {
+  // display: block;
+  display: flex;
+  float: right;
+  outline: none;
+}

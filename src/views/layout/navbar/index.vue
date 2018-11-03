@@ -1,18 +1,43 @@
 <template>
   <div>
-    <el-menu mode="horizontal"
-    background-color="#545c64"
-    text-color="#fff"
-    active-text-color="#ffd04b">
-      <el-menu-item index="1">1</el-menu-item>
-      <el-menu-item index="2">2</el-menu-item>
+    <el-menu mode="horizontal">
+      <div class="left-menu">
+        <el-menu-item index="hamburger">
+          <hamburger/>
+        </el-menu-item>
+      </div>
+      <div class="right-menu">
+        <el-menu-item index="language">
+          <language/>
+        </el-menu-item>
+        <el-menu-item index="user-settings">
+          <user-settings/>
+        </el-menu-item>
+      </div>
     </el-menu>
   </div>
 </template>
 
 <script>
+import UserSettings from '@/components/UserSettings'
+import Hamburger from '@/components/Hamburger'
+import Language from '@/components/Language'
 export default {
-  name: 'navbar'
-
+  name: 'navbar',
+  components: {
+    'user-settings': UserSettings,
+    'hamburger': Hamburger,
+    'language': Language
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../../../style/layout/navbar/index.scss';
+</style>
+
+<style lang="scss">
+.el-menu-item {
+  padding: 0px;
+}
+</style>

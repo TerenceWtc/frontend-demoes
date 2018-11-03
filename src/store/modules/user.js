@@ -1,10 +1,12 @@
 import { setToken, getToken, removeToken } from '@/util/auth'
 import { login } from '@/api/login'
+import { getMenuList } from '@/api/auth/menu'
 
 const user = {
   state: {
     id: undefined,
-    token: getToken()
+    token: getToken(),
+    menus: undefined
   },
 
   mutations: {
@@ -13,12 +15,16 @@ const user = {
     },
     SET_TOKEN: (state, token) => {
       state.token = token
+    },
+    SET_MENUS: (state, menus) => {
+      state.menus = menus
     }
   },
 
   actions: {
     Login ({ commit }, user) {
       removeToken()
+      commit('SET_MENUS', undefined)
       return new Promise((resolve, reject) => {
         login(user).then(response => {
           setToken(response.data)
@@ -35,6 +41,13 @@ const user = {
         commit('SET_TOKEN', '')
         removeToken()
         resolve()
+      })
+    },
+    GetMenus ({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        getMenuList(state.token).then(response => {
+          commit('SET_MENUS', response.menu)
+        })
       })
     }
   }

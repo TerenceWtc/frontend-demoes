@@ -4,7 +4,7 @@
       <el-date-picker
         v-model="dateTime"
         type="datetime"
-        placeholder="选择日期时间">
+        :placeholder="$t('placeholder.datetime')">
       </el-date-picker>
       <time-zone></time-zone>
     </el-form>

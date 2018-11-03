@@ -4,6 +4,7 @@ import layout from '@/views/layout/index'
 import home from '@/views/home/index'
 import dateTime from '@/views/dateTime/index'
 import login from '@/views/login/index'
+import introduction from '@/views/introduction/index'
 
 Vue.use(Router)
 
@@ -18,7 +19,14 @@ export default new Router({
     {
       path: '/',
       name: 'layout',
-      component: layout
+      component: layout,
+      children: [
+        {
+          path: 'introduction',
+          name: 'introduction',
+          component: introduction
+        }
+      ]
     },
     {
       path: '/home',

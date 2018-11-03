@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import { getToken } from '@/util/auth'
 import store from './store'
 import '@/mock/index.js'
+import i18n from './lang'
 
 // white list for not redirection
 const whiteList = ['/login']
@@ -17,6 +18,11 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next('/')
     } else {
+      console.log(store.getters)
+      if (store.getters.menus === undefined) {
+        store.dispatch('GetMenus').then(response => {
+        })
+      }
       next()
     }
     // store.dispatch('FronteLogOut').then(() => {
@@ -34,13 +40,16 @@ router.beforeEach((to, from, next) => {
 
 Vue.config.productionTip = false
 
-Vue.use(ElementUI)
+Vue.use(ElementUI, {
+  i18n: (key, value) => i18n.t(key, value)
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   components: { App },
   template: '<App/>'
 })
