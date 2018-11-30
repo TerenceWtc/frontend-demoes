@@ -5,6 +5,7 @@ import home from '@/views/home/index'
 import dateTime from '@/views/dateTime/index'
 import login from '@/views/login/index'
 import introduction from '@/views/introduction/index'
+import checkBox from '@/views/checkBox/index'
 
 Vue.use(Router)
 
@@ -25,6 +26,11 @@ export default new Router({
           path: 'introduction',
           name: 'introduction',
           component: introduction
+        },
+        {
+          path: 'checkBox',
+          name: 'checkBox',
+          component: checkBox
         }
       ]
     },

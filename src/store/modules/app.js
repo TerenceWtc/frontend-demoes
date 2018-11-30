@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 const app = {
   state: {
     sidebar: {
-      opened: !Cookies.get('sidebarStatus')
+      opened: Cookies.get('sidebarStatus') || 1
     },
     language: Cookies.get('language') || 'en'
   },

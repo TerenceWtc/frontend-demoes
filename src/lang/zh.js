@@ -1,5 +1,6 @@
 export default {
   label: {
+    checkBox: '复选框',
     confirmPass: '确认',
     email: '邮箱',
     introduction: '介绍',

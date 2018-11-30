@@ -4,6 +4,10 @@ const menuMap = {
     {
       title: 'introduction',
       code: 'introduction'
+    },
+    {
+      title: 'checkBox',
+      code: 'checkBox'
     }
   ]
 }

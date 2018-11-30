@@ -2,15 +2,23 @@
   border-bottom: 0px;
 }
 
+.main-navbar {
+  height:56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .left-menu {
-  display: block;
-  float: left;
+  display: flex;
   outline: none;
 }
 
+.middle-menu {
+  flex: 1;
+}
+
 .right-menu {
-  // display: block;
   display: flex;
-  float: right;
   outline: none;
 }

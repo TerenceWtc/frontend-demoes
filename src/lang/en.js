@@ -1,5 +1,6 @@
 export default {
   label: {
+    checkBox: 'checkbox',
     confirmPass: 'confirm',
     email: 'email',
     introduction: 'introduction',

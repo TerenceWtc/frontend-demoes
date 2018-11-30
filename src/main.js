@@ -18,7 +18,6 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next('/')
     } else {
-      console.log(store.getters)
       if (store.getters.menus === undefined) {
         store.dispatch('GetMenus').then(response => {
         })

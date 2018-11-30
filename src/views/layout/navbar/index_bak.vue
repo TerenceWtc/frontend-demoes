@@ -1,15 +1,20 @@
 <template>
-  <div class="main-navbar">
-    <div class="left-menu">
-      <hamburger/>
-    </div>
-    <div class="middle-menu">
-      <breadcrumb/>
-    </div>
-    <div class="right-menu">
-      <language/>
-      <user-settings/>
-    </div>
+  <div>
+    <el-menu mode="horizontal">
+      <div class="left-menu">
+        <el-menu-item index="hamburger">
+          <hamburger/>
+        </el-menu-item>
+      </div>
+      <div class="right-menu">
+        <el-menu-item index="language">
+          <language/>
+        </el-menu-item>
+        <el-menu-item index="user-settings">
+          <user-settings/>
+        </el-menu-item>
+      </div>
+    </el-menu>
   </div>
 </template>
 
