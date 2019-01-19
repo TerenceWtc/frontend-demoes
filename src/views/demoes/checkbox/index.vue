@@ -1,7 +1,7 @@
 <template>
 <div>
   <div>
-    <h3>{{$t('label.checkBox')}}</h3>
+    <h3>{{$t('label.checkbox')}}</h3>
     <div v-for="(groups, groupId) in checkData" :key="groupId">
       <el-checkbox v-model="groups.checkAll" @change="handleAll(groupId)">{{groups.groupName}}</el-checkbox>
       <div v-for="(members, memberId) in groups.checkGroup" :key="memberId" class="indent_2">
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import { getCheckBoxData } from '@/api/checkBox'
+import { getCheckboxData } from '@/api/checkbox'
 
 export default {
-  name: 'checkBox',
+  name: 'checkbox',
   data () {
     return {
       checkData: undefined
@@ -27,9 +27,8 @@ export default {
   },
   methods: {
     getData () {
-      getCheckBoxData().then(response => {
+      getCheckboxData().then(response => {
         this.checkData = response.data
-        console.log(this.checkData)
       })
     },
     handleAll (groupId) {

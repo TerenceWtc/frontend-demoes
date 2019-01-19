@@ -1,40 +1,60 @@
-const checkBox = {
+const checkbox = {
   status: 200,
   data: [
     {
       checkAll: false,
-      groupName: 'first group',
+      groupName: 'System (C:\\)',
       checkGroup: [
         {
           checkMember: false,
-          name: '1st item',
+          name: 'DRIVERS',
           id: 1
         },
         {
           checkMember: false,
-          name: '2nd item',
+          name: 'Intel',
           id: 2
+        },
+        {
+          checkMember: false,
+          name: 'Program Files',
+          id: 3
+        },
+        {
+          checkMember: false,
+          name: 'Program Files (x86)',
+          id: 4
+        },
+        {
+          checkMember: false,
+          name: 'Windows',
+          id: 5
+        },
+        {
+          checkMember: false,
+          name: 'User',
+          id: 6
         }
       ]
     },
     {
       checkAll: false,
-      groupName: 'second group',
+      groupName: 'Others (D:\\)',
       checkGroup: [
         {
           checkMember: false,
-          name: '1st item',
+          name: 'Music',
+          id: 1
+        },
+        {
+          checkMember: false,
+          name: 'Video',
+          id: 2
+        },
+        {
+          checkMember: false,
+          name: 'Game',
           id: 3
-        },
-        {
-          checkMember: false,
-          name: '2nd item',
-          id: 4
-        },
-        {
-          checkMember: false,
-          name: '3rd item',
-          id: 5
         }
       ]
     }
@@ -43,6 +63,6 @@ const checkBox = {
 
 export default {
   GetData: () => {
-    return checkBox
+    return checkbox
   }
 }

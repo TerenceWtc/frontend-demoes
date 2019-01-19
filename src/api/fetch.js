@@ -2,12 +2,15 @@ import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/util/auth'
+import i18n from '@/lang'
+
+const s = 1000
 
 // create an axios' instance
 const instance = axios.create({
   // use process.env.BASE_API
   baseURL: process.env.BASE_API,
-  timeout: 30 * 1000
+  timeout: 30 * s
 })
 
 // request interceptor
@@ -38,12 +41,12 @@ instance.interceptors.response.use(response => {
     return Promise.reject(new Error(data.message))
   }
   if (status !== 200) {
-    console.log(data)
     Message({
-      message: data.message,
+      message: i18n.t(`code.${status}`),
       type: 'warning',
-      duration: 5 * 1000
+      duration: 5 * s
     })
+    return Promise.reject(new Error(data.message))
   }
   return data
 }, error => {

@@ -7,6 +7,7 @@
       <breadcrumb/>
     </div>
     <div class="right-menu">
+      <welcome/>
       <language/>
       <user-settings/>
     </div>
@@ -18,13 +19,15 @@ import UserSettings from '@/components/UserSettings'
 import Hamburger from '@/components/Hamburger'
 import Language from '@/components/Language'
 import Breadcrumb from '@/components/Breadcrumb'
+import Welcome from '@/components/Welcome'
 export default {
   name: 'navbar',
   components: {
     'user-settings': UserSettings,
     'hamburger': Hamburger,
     'language': Language,
-    'breadcrumb': Breadcrumb
+    'breadcrumb': Breadcrumb,
+    'welcome': Welcome
   }
 }
 </script>

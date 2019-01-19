@@ -1,20 +1,29 @@
 import { setToken, getToken, removeToken } from '@/util/auth'
-import { login } from '@/api/login'
-import { getMenuList } from '@/api/auth/menu'
+import { login } from '@/api/auth/login'
+import { getUserInfo } from '@/api/admin/user'
+import { getMenuList } from '@/api/admin/menu'
 
 const user = {
   state: {
-    id: undefined,
     token: getToken(),
+    userId: undefined,
+    userName: undefined,
+    roles: undefined,
     menus: undefined
   },
 
   mutations: {
-    SET_ID: (state, id) => {
-      state.id = id
-    },
     SET_TOKEN: (state, token) => {
       state.token = token
+    },
+    SET_USER_ID: (state, userId) => {
+      state.userId = userId
+    },
+    SET_USER_NAME: (state, userName) => {
+      state.userName = userName
+    },
+    SET_ROLES: (state, roles) => {
+      state.roles = roles
     },
     SET_MENUS: (state, menus) => {
       state.menus = menus
@@ -27,8 +36,8 @@ const user = {
       commit('SET_MENUS', undefined)
       return new Promise((resolve, reject) => {
         login(user).then(response => {
-          setToken(response.data)
-          commit('SET_TOKEN', response.data)
+          setToken(response.data.token)
+          commit('SET_TOKEN', response.data.token)
           resolve()
         }).catch(error => {
           reject(error)
@@ -41,6 +50,18 @@ const user = {
         commit('SET_TOKEN', '')
         removeToken()
         resolve()
+      })
+    },
+    GetInfo ({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        getUserInfo(state.token).then(response => {
+          commit('SET_USER_ID', response.data.userId)
+          commit('SET_USER_NAME', response.data.userName)
+          commit('SET_ROLES', response.data.roles)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
       })
     },
     GetMenus ({ commit, state }) {

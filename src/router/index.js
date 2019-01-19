@@ -3,9 +3,6 @@ import Router from 'vue-router'
 import layout from '@/views/layout/index'
 import home from '@/views/home/index'
 import dateTime from '@/views/dateTime/index'
-import login from '@/views/login/index'
-import introduction from '@/views/introduction/index'
-import checkBox from '@/views/checkBox/index'
 
 Vue.use(Router)
 
@@ -15,22 +12,42 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: login
+      component: () => import('@/views/login/index')
     },
     {
       path: '/',
       name: 'layout',
+      component: layout
+    },
+    {
+      path: '/introduction',
       component: layout,
       children: [
         {
-          path: 'introduction',
+          path: 'index',
           name: 'introduction',
-          component: introduction
+          component: () => import('@/views/introduction/index')
+        }
+      ]
+    },
+    {
+      path: '/demoes',
+      component: layout,
+      children: [
+        {
+          path: 'checkbox',
+          name: 'checkbox',
+          component: () => import('@/views/demoes/checkbox/index')
         },
         {
-          path: 'checkBox',
-          name: 'checkBox',
-          component: checkBox
+          path: 'formValidation',
+          name: 'formValidation',
+          component: () => import('@/views/demoes/formValidation/index')
+        },
+        {
+          path: 'line',
+          name: 'e-line',
+          component: () => import('@/views/demoes/line/index')
         }
       ]
     },

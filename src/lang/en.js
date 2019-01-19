@@ -1,13 +1,20 @@
 export default {
   label: {
-    checkBox: 'checkbox',
+    age: 'age',
+    checkbox: 'checkbox',
     confirmPass: 'confirm',
     email: 'email',
+    female: 'female',
+    formValidation: 'form validation',
+    gender: 'gender',
     introduction: 'introduction',
+    line: 'line',
     login: 'login',
     logout: 'logout',
+    male: 'male',
+    name: 'name',
     password: 'password',
-    register: 'register',
+    registration: 'registration',
     resetPassword: 'reset password',
     userinfo: 'user info',
     username: 'username',
@@ -21,6 +28,7 @@ export default {
     confirmPass: 'please confirm your password',
     datetime: 'please input date & time',
     email: 'please input your email',
+    gender: 'please choose your gender',
     password: 'please input your password',
     username: 'please input your username'
   },
@@ -37,5 +45,9 @@ export default {
     fold: 'fold',
     language: 'switch language',
     setting: 'user settings'
+  },
+  code: {
+    40301: 'your account is not found',
+    40302: 'your account or password wrong!'
   }
 }

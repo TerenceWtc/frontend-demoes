@@ -1,8 +1,8 @@
 import fetch from '../../fetch'
 
-export function getMenuList () {
+export function getLine () {
   return fetch({
-    url: '/auth/menu/getMenuList',
+    url: '/echarts/line',
     method: 'get'
   })
 }

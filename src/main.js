@@ -9,6 +9,7 @@ import { getToken } from '@/util/auth'
 import store from './store'
 import '@/mock/index.js'
 import i18n from './lang'
+import SvgIcon from '@/components/SvgIcon'
 
 // white list for not redirection
 const whiteList = ['/login']
@@ -19,6 +20,8 @@ router.beforeEach((to, from, next) => {
       next('/')
     } else {
       if (store.getters.menus === undefined) {
+        store.dispatch('GetInfo').then(response => {
+        })
         store.dispatch('GetMenus').then(response => {
         })
       }
@@ -42,6 +45,8 @@ Vue.config.productionTip = false
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value)
 })
+
+Vue.component('svg-icon', SvgIcon)
 
 /* eslint-disable no-new */
 new Vue({

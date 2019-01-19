@@ -12,7 +12,7 @@
             <el-button class="margin_top_10" type="primary" @click="login">{{$t('button.login')}}</el-button>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane :label="$t('label.register')" name="register">
+      <el-tab-pane :label="$t('label.registration')" name="register">
         <el-form :model="registerForm" :rules="registerRules" ref="registerForm" label-width="80px" label-position="left">
           <el-form-item prop="username" :label="$t('label.username')">
             <el-input class="input_w300" type="text" v-model="registerForm.username" :placeholder="$t('placeholder.username')"></el-input>
@@ -84,7 +84,6 @@ export default {
         if (valid) {
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.$router.push({path: '/'})
-          }).catch(() => {
           })
         }
       })

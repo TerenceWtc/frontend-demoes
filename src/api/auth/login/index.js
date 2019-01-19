@@ -1,8 +1,10 @@
-import fetch from '../fetch'
+import fetch from '@/api/fetch'
+
+const BASE_URL = '/auth/login'
 
 export function login (user) {
   return fetch({
-    url: '/auth/login',
+    url: `${BASE_URL}`,
     method: 'post',
     data: user
   })
