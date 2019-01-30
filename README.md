@@ -31,5 +31,5 @@ so i tried to implement it by `JavaScript`
 
 ## Features
 
-### Mock.js & EasyMock
+### Mock.js ~~& EasyMock~~
 this is a purely front-end project without backend, the data is mocked currently.
