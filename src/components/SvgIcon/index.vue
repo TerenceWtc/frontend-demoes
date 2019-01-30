@@ -1,5 +1,5 @@
 <template>
-  <svg class="svg-icon" aria-hidden="true">
+  <svg :class="iconClass" aria-hidden="true">
     <use :xlink:href="iconName"></use>
   </svg>
 </template>
@@ -11,6 +11,10 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    iconClass: {
+      type: String,
+      required: false
     }
   },
   computed: {
@@ -22,8 +26,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.svg-icon {
-  width: 20px;
-  height: 20px;
-}
+@import '../../style/components/SvgIcon/index.scss';
 </style>

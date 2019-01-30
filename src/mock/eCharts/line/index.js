@@ -9,11 +9,7 @@ for (let i = 0; i < length; i++) {
   colorList.push(random.color())
   let dataList = []
   for (let j = 0; j < 12; j++) {
-    if (j === 4 || j === 8) {
-      dataList.push(null)
-    } else {
-      dataList.push(random.integer(0, 1000))
-    }
+    dataList.push(random.integer(0, 1000))
   }
   seriesList.push({
     name: random.string(),
@@ -27,12 +23,17 @@ const lineData = {
   data: {
     color: colorList,
     title: {
-      text: 'line graphy'
+      text: 'line graphy',
+      textStyle: {
+        color: '#FFFFFF',
+        fontSize: 14
+      },
+      backgroundColor: '#D6EEEE'
     },
     tooltip: {},
     dataZoom: [{
       type: 'inside',
-      start: 80,
+      start: 50,
       end: 100
     }, {
       type: 'slider',

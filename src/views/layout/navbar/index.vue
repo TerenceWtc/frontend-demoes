@@ -35,9 +35,3 @@ export default {
 <style lang="scss" scoped>
 @import '../../../style/layout/navbar/index.scss';
 </style>
-
-<style lang="scss">
-.el-menu-item {
-  padding: 0px;
-}
-</style>

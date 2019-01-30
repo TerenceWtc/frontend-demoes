@@ -1,7 +1,7 @@
 <template>
   <div @click="languageHandle">
     <el-tooltip effect="dark" :content="$t('hint.language')" placement="bottom-start">
-      <svg-icon :name="`language`" class="icon"/>
+      <svg-icon :name="`language`" :iconClass="`svg-icon svg-black icon`"/>
     </el-tooltip>
   </div>
 </template>

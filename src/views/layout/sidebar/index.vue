@@ -4,8 +4,10 @@
     background-color="#545c64"
     text-color="#fff"
     active-text-color="#ffd04b"
+    :collapse="!sidebar.opened"
     :router="routerTrue">
       <el-menu-item v-for="item in menus" :index="'/' + item.code" :key="item.code">
+        <svg-icon :name="item.icon" :iconClass="`svg-icon svg-white`"/>
         <span slot="title">{{$t('label.' + item.title)}}</span>
       </el-menu-item>
     </el-menu>
@@ -13,6 +15,9 @@
 </template>
 
 <script>
+import '@/icons/svg/introduction.svg'
+import '@/icons/svg/validation.svg'
+import '@/icons/svg/chart.svg'
 import { mapGetters } from 'vuex'
 export default {
   name: 'sidebar',
@@ -26,7 +31,10 @@ export default {
   computed: {
     ...mapGetters([
       'menus'
-    ])
+    ]),
+    sidebar () {
+      return this.$store.getters.sidebar
+    }
   },
   methods: {
   }

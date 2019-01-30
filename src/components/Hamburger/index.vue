@@ -1,7 +1,7 @@
 <template>
   <div @click="toggleClick">
     <el-tooltip effect="dark" :content="$t('hint.' + (sidebar.opened ? 'fold' : 'expand'))" placement="bottom-start">
-      <svg-icon :name="`hamburger`" class="icon hamburger" :class="{'is-active': sidebar.opened}"/>
+      <svg-icon :name="`hamburger`" :iconClass="`svg-icon svg-black icon hamburger`" :class="{'is-active': sidebar.opened}"/>
     </el-tooltip>
   </div>
 </template>

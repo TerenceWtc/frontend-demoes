@@ -33,3 +33,6 @@ so i tried to implement it by `JavaScript`
 
 ### Mock.js ~~& EasyMock~~
 this is a purely front-end project without backend, the data is mocked currently.
+
+### Sass
+Sass is an extension of CSS that adds power and elegance to the basic language.

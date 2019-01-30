@@ -64,9 +64,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.indent_2 {
-  margin-left: 2em;
-}
-</style>

@@ -2,7 +2,7 @@
   <el-dropdown trigger="click">
     <div>
       <el-tooltip effect="dark" :content="$t('hint.setting')" placement="bottom-start">
-        <svg-icon :name="`settings`" class="icon"/>
+        <svg-icon :name="`settings`" :iconClass="`svg-icon svg-black icon`"/>
       </el-tooltip>
     </div>
     <el-dropdown-menu slot="dropdown">
