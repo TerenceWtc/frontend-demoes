@@ -12,7 +12,8 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/login/index')
+      // component: () => import('@/views/login/index')
+      component: resolve => require(['@/views/login/index'], resolve)
     },
     {
       path: '/',
@@ -26,7 +27,8 @@ export default new Router({
         {
           path: 'index',
           name: 'introduction',
-          component: () => import('@/views/introduction/index')
+          // component: () => import('@/views/introduction/index')
+          component: resolve => require(['@/views/introduction/index'], resolve)
         }
       ]
     },
@@ -37,17 +39,20 @@ export default new Router({
         {
           path: 'checkbox',
           name: 'checkbox',
-          component: () => import('@/views/demoes/checkbox/index')
+          // component: () => import('@/views/demoes/checkbox/index')
+          component: resolve => require(['@/views/demoes/checkbox/index'], resolve)
         },
         {
           path: 'formValidation',
           name: 'formValidation',
-          component: () => import('@/views/demoes/formValidation/index')
+          // component: () => import('@/views/demoes/formValidation/index')
+          component: resolve => require(['@/views/demoes/formValidation/index'], resolve)
         },
         {
           path: 'line',
           name: 'e-line',
-          component: () => import('@/views/demoes/line/index')
+          // component: () => import('@/views/demoes/line/index')
+          component: resolve => require(['@/views/demoes/line/index'], resolve)
         }
       ]
     },
