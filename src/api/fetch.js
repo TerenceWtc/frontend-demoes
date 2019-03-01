@@ -19,7 +19,7 @@ async function refresh () {
     method: 'POST',
     url: '/api/auth/refresh',
     headers: {
-      'Refresh': getRefreshToken()
+      'X-refresh-token': getRefreshToken()
     }
   })
 }
@@ -42,10 +42,10 @@ instance.interceptors.request.use(async config => {
         }
         // store the new accessToken
         store.dispatch('RefreshToken', response.data.data)
-        config.headers.Authorization = 'Bearer ' + response.data.data
+        config.headers['X-access-token'] = 'Bearer ' + response.data.data
       })
     } else {
-      config.headers.Authorization = 'Bearer ' + getAccessToken()
+      config.headers['X-access-token'] = 'Bearer ' + getAccessToken()
     }
   }
   return config
