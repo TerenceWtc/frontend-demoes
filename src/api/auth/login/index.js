@@ -9,3 +9,10 @@ export function login (user) {
     data: user
   })
 }
+
+export function test () {
+  return fetch({
+    url: '/auth/test',
+    method: 'get'
+  })
+}

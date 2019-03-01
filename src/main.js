@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import { getToken } from '@/util/auth'
+// import { getAccessToken } from '@/util/auth'
 import store from './store'
 import '@/mock/index.js'
 import i18n from './lang'
@@ -14,16 +14,18 @@ import SvgIcon from '@/components/SvgIcon'
 // white list for not redirection
 const whiteList = ['/login']
 router.beforeEach((to, from, next) => {
-  if (getToken()) {
+  if (store.getters.accessToken) {
     // rediret to '/' if token not null & route to login
     if (to.path === '/login') {
       next('/')
     } else {
       if (store.getters.menus === undefined) {
-        store.dispatch('GetInfo').then(response => {
+        store.dispatch('test').then(resposne => {
         })
-        store.dispatch('GetMenus').then(response => {
-        })
+        // store.dispatch('GetInfo').then(response => {
+        // })
+        // store.dispatch('GetMenus').then(response => {
+        // })
       }
       next()
     }

@@ -1,11 +1,12 @@
-import { setToken, getToken, removeToken } from '@/util/auth'
-import { login } from '@/api/auth/login'
+import { setAccessToken, getAccessToken, removeAccessToken, setRefreshToken, getRefreshToken, removeRefreshToken } from '@/util/auth'
+import { login, test } from '@/api/auth/login'
 import { getUserInfo } from '@/api/admin/user'
 import { getMenuList } from '@/api/admin/menu'
 
 const user = {
   state: {
-    token: getToken(),
+    accessToken: getAccessToken(),
+    refreshToken: getRefreshToken(),
     userId: undefined,
     userName: undefined,
     roles: undefined,
@@ -13,8 +14,11 @@ const user = {
   },
 
   mutations: {
-    SET_TOKEN: (state, token) => {
-      state.token = token
+    SET_ACCESS_TOKEN: (state, token) => {
+      state.accessToken = token
+    },
+    SET_REFRESH_TOKEN: (state, token) => {
+      state.refreshToken = token
     },
     SET_USER_ID: (state, userId) => {
       state.userId = userId
@@ -32,12 +36,15 @@ const user = {
 
   actions: {
     Login ({ commit }, user) {
-      removeToken()
+      removeAccessToken()
+      removeRefreshToken()
       commit('SET_MENUS', undefined)
       return new Promise((resolve, reject) => {
         login(user).then(response => {
-          setToken(response.data.token)
-          commit('SET_TOKEN', response.data.token)
+          setAccessToken(response.data.accessToken)
+          commit('SET_ACCESS_TOKEN', response.data.accessToken)
+          setRefreshToken(response.data.refreshToken)
+          commit('SET_REFRESH_TOKEN', response.data.refreshToken)
           resolve()
         }).catch(error => {
           reject(error)
@@ -47,14 +54,16 @@ const user = {
     // function logout for front end
     FrontendLogOut ({ commit }) {
       return new Promise(resolve => {
-        commit('SET_TOKEN', '')
-        removeToken()
+        commit('SET_ACCESS_TOKEN', '')
+        commit('SET_REFRESH_TOKEN', '')
+        removeAccessToken()
+        removeRefreshToken()
         resolve()
       })
     },
     GetInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getUserInfo(state.token).then(response => {
+        getUserInfo(state.accessToken).then(response => {
           commit('SET_USER_ID', response.data.userId)
           commit('SET_USER_NAME', response.data.userName)
           commit('SET_ROLES', response.data.roles)
@@ -66,8 +75,19 @@ const user = {
     },
     GetMenus ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getMenuList(state.token).then(response => {
+        getMenuList(state.accessToken).then(response => {
           commit('SET_MENUS', response.menu)
+        })
+      })
+    },
+    RefreshToken ({ commit }, token) {
+      setAccessToken(token)
+      commit('SET_ACCESS_TOKEN', token)
+    },
+    test () {
+      return new Promise((resolve, reject) => {
+        test().then(response => {
+          console.log(response)
         })
       })
     }
