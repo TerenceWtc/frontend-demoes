@@ -34,7 +34,7 @@ export default {
   },
   regex: {
     length4to20: 'length should be in 4 to 20 characters',
-    lengthGTE6: 'password should not less than 6.',
+    lengthGTE5: 'password should not less than 5',
     username: 'username is required'
   },
   message: {

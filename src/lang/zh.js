@@ -34,7 +34,7 @@ export default {
   },
   regex: {
     length4to20: '长度需要在4到20个字符之间',
-    lengthGTE6: '长度不能小于6位',
+    lengthGTE5: '长度不能小于5位',
     username: '账号不能为空'
   },
   message: {

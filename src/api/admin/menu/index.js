@@ -4,7 +4,7 @@ const BASE_URL = '/admin/menu'
 
 export function getMenuList (token) {
   const param = {
-    token: token
+    accessToken: token
   }
   return fetch({
     url: `${BASE_URL}/getMenuList`,

@@ -4,7 +4,7 @@ const BASE_URL = '/admin/user'
 
 export function getUserInfo (token) {
   const param = {
-    token: token
+    accessToken: token
   }
   return fetch({
     url: `${BASE_URL}/getUserInfo`,

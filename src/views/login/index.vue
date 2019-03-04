@@ -38,7 +38,7 @@ export default {
   data () {
     const validatePass = (rule, value, callback) => {
       if (value.length < 5) {
-        callback(new Error(this.$t('regex.lengthGTE6')))
+        callback(new Error(this.$t('regex.lengthGTE5')))
       } else {
         callback()
       }

@@ -8,8 +8,10 @@ const user = {
     accessToken: getAccessToken(),
     refreshToken: getRefreshToken(),
     userId: undefined,
-    userName: undefined,
-    roles: undefined,
+    username: undefined,
+    name: undefined,
+    groupId: undefined,
+    groupName: undefined,
     menus: undefined
   },
 
@@ -23,11 +25,17 @@ const user = {
     SET_USER_ID: (state, userId) => {
       state.userId = userId
     },
-    SET_USER_NAME: (state, userName) => {
-      state.userName = userName
+    SET_USERNAME: (state, username) => {
+      state.username = username
     },
-    SET_ROLES: (state, roles) => {
-      state.roles = roles
+    SET_NAME: (state, name) => {
+      state.name = name
+    },
+    SET_GROUP_ID: (state, groupId) => {
+      state.groupId = groupId
+    },
+    SET_GROUP_NAME: (state, groupName) => {
+      state.groupName = groupName
     },
     SET_MENUS: (state, menus) => {
       state.menus = menus
@@ -64,9 +72,12 @@ const user = {
     GetInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
         getUserInfo(state.accessToken).then(response => {
-          commit('SET_USER_ID', response.data.userId)
-          commit('SET_USER_NAME', response.data.userName)
-          commit('SET_ROLES', response.data.roles)
+          let data = response.data
+          commit('SET_USER_ID', data.userId)
+          commit('SET_USERNAME', data.username)
+          commit('SET_NAME', data.name)
+          commit('SET_GROUP_ID', data.groupId)
+          commit('SET_GROUP_NAME', data.groupName)
           resolve()
         }).catch(error => {
           reject(error)
@@ -76,7 +87,11 @@ const user = {
     GetMenus ({ commit, state }) {
       return new Promise((resolve, reject) => {
         getMenuList(state.accessToken).then(response => {
-          commit('SET_MENUS', response.menu)
+          console.log(response.data)
+          commit('SET_MENUS', response.data)
+          resolve()
+        }).catch(error => {
+          reject(error)
         })
       })
     },
