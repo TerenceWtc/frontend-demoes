@@ -29,12 +29,21 @@ export default {
     datetime: '请输入时间日期',
     email: '请输入邮箱',
     gender: '请选择性别',
+    name: '请输入姓名',
     password: '请输入密码',
     username: '请输入账号'
   },
   regex: {
+    confirmPwd: '两次密码输入不一致',
+    duplicateUsername: '账号已存在',
+    email: '邮箱不能为空',
+    invalidEmail: '邮箱不合法',
     length4to20: '长度需要在4到20个字符之间',
+    length6to16: '长度需要在6到16个字符之间',
     lengthGTE5: '长度不能小于5位',
+    name: '姓名不能为空',
+    password: '密码不能为空',
+    specialPwd: '密码不能包含特殊字符',
     username: '账号不能为空'
   },
   message: {

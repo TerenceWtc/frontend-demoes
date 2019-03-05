@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
-import store from '../store'
+import store from '@/store/index'
 import { getAccessToken, getRefreshToken } from '@/util/auth'
 import { verify } from '@/util/jwt'
 import i18n from '@/lang'
@@ -55,9 +55,7 @@ instance.interceptors.request.use(async config => {
 
 // response interceptor
 instance.interceptors.response.use(response => {
-  console.log(response)
   let data = response.data
-  console.log(data)
   let status = data.status
   if (status === 60201 || status === 60202 || response.status === 401) {
     MessageBox.confirm('You are logout', {
@@ -81,7 +79,6 @@ instance.interceptors.response.use(response => {
   }
   return data
 }, error => {
-  console.log('-----')
   Promise.reject(error)
 })
 

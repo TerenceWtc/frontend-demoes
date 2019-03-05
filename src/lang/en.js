@@ -29,12 +29,21 @@ export default {
     datetime: 'please input date & time',
     email: 'please input your email',
     gender: 'please choose your gender',
+    name: 'please input your name',
     password: 'please input your password',
     username: 'please input your username'
   },
   regex: {
+    confirmPwd: 'password does not match',
+    duplicateUsername: 'the username has been registered',
+    email: 'email is required',
+    invalidEmail: 'invalid email',
     length4to20: 'length should be in 4 to 20 characters',
+    length6to16: 'length should be in 6 to 16 characters',
     lengthGTE5: 'password should not less than 5',
+    name: 'name is required',
+    password: 'password is required',
+    specialPwd: 'password should not contain special characters',
     username: 'username is required'
   },
   message: {

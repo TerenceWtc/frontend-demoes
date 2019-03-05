@@ -1,4 +1,4 @@
-import fetch from '../../fetch'
+import fetch from '@/api/fetch'
 
 export function getLine () {
   return fetch({

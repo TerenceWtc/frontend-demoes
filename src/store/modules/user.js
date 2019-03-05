@@ -1,5 +1,5 @@
 import { setAccessToken, getAccessToken, removeAccessToken, setRefreshToken, getRefreshToken, removeRefreshToken } from '@/util/auth'
-import { login, test } from '@/api/auth/login'
+import { login, register } from '@/api/auth/login'
 import { getUserInfo } from '@/api/admin/user'
 import { getMenuList } from '@/api/admin/menu'
 
@@ -59,6 +59,22 @@ const user = {
         })
       })
     },
+    Register ({ commit }, user) {
+      removeAccessToken()
+      removeRefreshToken()
+      commit('SET_MENUS', undefined)
+      return new Promise((resolve, reject) => {
+        register(user).then(response => {
+          setAccessToken(response.data.accessToken)
+          commit('SET_ACCESS_TOKEN', response.data.accessToken)
+          setRefreshToken(response.data.refreshToken)
+          commit('SET_REFRESH_TOKEN', response.data.refreshToken)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
     // function logout for front end
     FrontendLogOut ({ commit }) {
       return new Promise(resolve => {
@@ -87,7 +103,6 @@ const user = {
     GetMenus ({ commit, state }) {
       return new Promise((resolve, reject) => {
         getMenuList(state.accessToken).then(response => {
-          console.log(response.data)
           commit('SET_MENUS', response.data)
           resolve()
         }).catch(error => {
@@ -98,13 +113,6 @@ const user = {
     RefreshToken ({ commit }, token) {
       setAccessToken(token)
       commit('SET_ACCESS_TOKEN', token)
-    },
-    test () {
-      return new Promise((resolve, reject) => {
-        test().then(response => {
-          console.log(response)
-        })
-      })
     }
   }
 }
