@@ -1,16 +1,14 @@
 <template>
   <div>
-    <github-corner/>
     <router-view :key="key"></router-view>
   </div>
 </template>
 
 <script>
-import GithubCorner from '@/components/GithubCorner'
+
 export default {
   name: 'contents',
   components: {
-    'github-corner': GithubCorner
   },
   data () {
     return {
@@ -19,7 +17,6 @@ export default {
   created () {
   },
   methods: {
-
   },
   computed: {
     key () {
