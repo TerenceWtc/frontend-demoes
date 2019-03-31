@@ -5,16 +5,43 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-// import { getAccessToken } from '@/util/auth'
+import { getRefreshToken } from '@/util/auth'
 import store from './store'
 import '@/mock/index.js'
 import i18n from './lang'
 import SvgIcon from '@/components/SvgIcon'
+import '@/global'
+import axios from 'axios'
+
+async function refresh () {
+  console.log(getRefreshToken())
+  return axios({
+    method: 'POST',
+    url: '/api/auth/refresh',
+    headers: {
+      'X-refresh-token': getRefreshToken()
+    }
+  })
+}
 
 // white list for not redirection
 const whiteList = ['/login']
-router.beforeEach((to, from, next) => {
-  if (store.getters.accessToken) {
+router.beforeEach(async (to, from, next) => {
+  let accessToken = store.getters.accessToken
+  if (accessToken) {
+    await refresh().then(response => {
+      // logout if refreshToken expired
+      if (response.data.status === 60202) {
+        store.dispatch('FrontendLogOut').then(() => {
+          location.reload()
+        })
+        // reject the request chains
+        return Promise.reject(new Error(response.message))
+      }
+      // store the new accessToken
+      store.dispatch('RefreshToken', response.data.data)
+    }
+    )
     // rediret to '/' if token not null & route to login
     if (to.path === '/login') {
       next('/')
