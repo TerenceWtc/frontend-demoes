@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '@/store/index'
-import { getAccessToken, getRefreshToken } from '@/util/auth'
+import { getAccessToken } from '@/util/auth'
 import { verify } from '@/util/jwt'
 import i18n from '@/lang'
+import { refresh } from '@/api/auth/refresh'
 
 const s = 1000
 
@@ -14,16 +15,6 @@ const instance = axios.create({
   timeout: 30 * s
 })
 
-async function refresh () {
-  return axios({
-    method: 'POST',
-    url: '/api/auth/refresh',
-    headers: {
-      'X-refresh-token': getRefreshToken()
-    }
-  })
-}
-
 // request interceptor
 instance.interceptors.request.use(async config => {
   // set accessToken in request headers if exist
@@ -31,18 +22,8 @@ instance.interceptors.request.use(async config => {
     // verify whether token expired
     if (verify(getAccessToken())) {
       // refresh accessToken by refreshToken
-      await refresh().then(response => {
-        // logout if refreshToken expired
-        if (response.data.status === 60202) {
-          store.dispatch('FrontendLogOut').then(() => {
-            location.reload()
-          })
-          // reject the request chains
-          return Promise.reject(new Error(response.message))
-        }
-        // store the new accessToken
-        store.dispatch('RefreshToken', response.data.data)
-        config.headers['X-access-token'] = 'Bearer ' + response.data.data
+      await refresh().then(newToken => {
+        config.headers['X-access-token'] = 'Bearer ' + newToken
       })
     } else {
       config.headers['X-access-token'] = 'Bearer ' + getAccessToken()
@@ -56,19 +37,7 @@ instance.interceptors.request.use(async config => {
 // response interceptor
 instance.interceptors.response.use(response => {
   let data = response.data
-  let status = data.status
-  if (status === 60201 || status === 60202 || response.status === 401) {
-    MessageBox.confirm('You are logout', {
-      confirmButtonText: 'Re-login',
-      cancelButtonText: 'Cancel',
-      type: 'warning'
-    }).then(() => {
-      store.dispatch('FrontendLogOut').then(() => {
-        location.reload()
-      })
-    })
-    return Promise.reject(new Error(data.message))
-  }
+  let status = response.status
   if (status !== 200) {
     Message({
       message: i18n.t(`code.${status}`),
@@ -79,6 +48,17 @@ instance.interceptors.response.use(response => {
   }
   return data
 }, error => {
+  if (error.response.data.status === 60202) {
+    MessageBox.confirm('You are logout', {
+      confirmButtonText: 'Re-login',
+      cancelButtonText: 'Cancel',
+      type: 'warning'
+    }).then(() => {
+      store.dispatch('FrontendLogOut').then(() => {
+        location.reload()
+      })
+    })
+  }
   Promise.reject(error)
 })
 
