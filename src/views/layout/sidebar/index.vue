@@ -18,6 +18,7 @@
 import '@/icons/svg/introduction.svg'
 import '@/icons/svg/validation.svg'
 import '@/icons/svg/chart.svg'
+import '@/icons/svg/userManagement.svg'
 import { mapGetters } from 'vuex'
 export default {
   name: 'sidebar',

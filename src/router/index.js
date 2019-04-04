@@ -33,6 +33,17 @@ export default new Router({
       ]
     },
     {
+      path: '/admin',
+      component: layout,
+      children: [
+        {
+          path: 'user/index',
+          name: 'user',
+          component: resolve => require(['@/views/admin/user/index'], resolve)
+        }
+      ]
+    },
+    {
       path: '/demoes',
       component: layout,
       children: [
