@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{$t('label.welcome')}}! {{username}}
+    {{$t('label.welcome')}}! {{name}}
   </div>
 </template>
 
@@ -9,7 +9,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'welcome',
   computed: {
-    ...mapGetters(['username'])
+    ...mapGetters(['name'])
   }
 }
 </script>
