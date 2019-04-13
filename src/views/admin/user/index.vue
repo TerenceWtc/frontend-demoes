@@ -17,9 +17,9 @@
     </div>
 
     <div>
-      <my-page ref="page" :total.sync="total"
-      :page.sync="page"
-      :size.sync="size"
+      <my-page ref="page" :total.sync="pageVo.total"
+      :page.sync="pageVo.page"
+      :size.sync="pageVo.size"
       :loading.sync="loading"/>
     </div>
 
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { list, deleteObj, getObj } from '@/api/admin/user'
+import { userList, deleteObj, getObj } from '@/api/admin/user'
 import User from './user'
 import Pagination from '@/components/Layout/Pagination'
 import Header from '@/components/Layout/Header'
@@ -48,9 +48,12 @@ export default {
       dialogVisible: false,
       dialogType: undefined,
       loading: false,
-      page: 1,
-      size: 10,
-      total: 0,
+      pageVo: {
+        page: 1,
+        size: 10,
+        total: 0,
+        paramsVoList: []
+      },
       multipleSelection: []
     }
   },
@@ -60,7 +63,10 @@ export default {
   methods: {
     getList () {
       this.loading = true
-      list(this.page, this.size).then(response => {
+      console.log(this.pageVo)
+      let param = JSON.stringify(this.pageVo)
+      param = encodeURIComponent(param)
+      userList(param).then(response => {
         this.tableData = response.data.rows
         this.total = response.data.total
         this.loading = false
@@ -85,6 +91,10 @@ export default {
       getObj(this.multipleSelection[0].userId).then(response => {
         this.$refs['user'].showDetail(response.data)
       })
+    },
+    searchHandler (search) {
+      this.pageVo.paramsVoList = search
+      this.getList()
     },
     selectionChangeHandler (val) {
       this.multipleSelection = val

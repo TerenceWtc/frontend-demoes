@@ -25,8 +25,13 @@
         <el-form-item prop="mobile" :label="$t('label.mobile')">
           <el-input class="width_260" type="text" v-model="userForm.mobile" :disabled="type == 'Detail'" :placeholder="$t('placeholder.mobile')"/>
         </el-form-item>
-        <el-form-item prop="group" :label="$t('label.group')">
+        <!-- <el-form-item prop="group" :label="$t('label.group')">
           <el-input class="width_260" type="text" v-model="userForm.group" :disabled="type == 'Detail'" :placeholder="$t('placeholder.group')"/>
+        </el-form-item> -->
+        <el-form-item prop="group" :label="$t('label.group')">
+          <el-select v-model="selectedGroup" placeholder="请选择">
+            <el-option v-for="item in groupList" :key="item.id" :label="item.name" :value="item.name"/>
+          </el-select>
         </el-form-item>
       </el-form>
 
@@ -42,6 +47,7 @@
 import { addObj, updateObj } from '@/api/admin/user'
 import { password, email } from '@/util/validate'
 import { verifyUsername } from '@/api/auth/login'
+import { groupIdAndName } from '@/api/admin/group'
 
 export default {
   name: 'user-template',
@@ -91,6 +97,8 @@ export default {
         mobile: '',
         group: ''
       },
+      groupList: [],
+      selectedGroup: undefined,
       userRules: {
         username: [
           {
@@ -174,7 +182,15 @@ export default {
       }
     }
   },
+  created () {
+    this.getGroupList()
+  },
   methods: {
+    getGroupList () {
+      groupIdAndName().then(response => {
+        this.groupList = response.data
+      })
+    },
     showAdd () {
       this.visible = true
       this.type = global.create

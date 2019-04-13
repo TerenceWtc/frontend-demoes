@@ -13,10 +13,14 @@ export function getUserInfo (token) {
   })
 }
 
-export function list (page, size) {
+export function userList (params) {
+  const param = {
+    page: params
+  }
   return fetch({
-    url: `${BASE_URL}/list?page=${page}&size=${size}`,
-    method: 'get'
+    url: `${BASE_URL}/list`,
+    method: 'get',
+    params: param
   })
 }
 
