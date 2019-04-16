@@ -1,7 +1,11 @@
 <template>
   <div class="breadcrumb">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item v-for="item in breadcrumbList"
+      :key="item.path"
+      :to="{ path: item.path }">
+        {{item.name}}
+      </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
 </template>
@@ -20,11 +24,13 @@ export default {
   methods: {
     getBreadcrumb () {
       let matched = this.$route.matched.filter(breadcrumb => breadcrumb.name)
+      console.log(this.$route.matched)
       const home = matched[0]
-      if (home && home.name.trim().toLocaleLowerCase() !== 'layout'.toLocaleLowerCase()) {
-        matched = [{path: '/layout'}].concat(matched)
+      if (home && home.name.trim().toLocaleLowerCase() !== 'home'.toLocaleLowerCase()) {
+        matched = [{name: 'home', path: '/'}].concat(matched)
       }
       this.breadcrumbList = matched
+      console.log(this.breadcrumbList)
     }
   },
   watch: {

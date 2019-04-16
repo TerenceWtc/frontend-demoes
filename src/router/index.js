@@ -6,6 +6,13 @@ import dateTime from '@/views/dateTime/index'
 
 Vue.use(Router)
 
+/**
+ * Note
+ * path: use in breadcrumb for router
+ * name: use in breadcrumb for display
+ * redirect: flag to judge whether to redirect
+ */
+
 export default new Router({
   mode: 'history',
   routes: [
@@ -17,7 +24,7 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'layout',
+      name: 'home',
       component: layout
     },
     {
