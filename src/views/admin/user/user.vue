@@ -238,7 +238,6 @@ export default {
       })
     },
     reset () {
-      console.log('reset')
       this.$refs['userForm'].resetFields()
     }
   }

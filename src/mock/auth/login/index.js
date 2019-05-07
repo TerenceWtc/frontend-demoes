@@ -1,8 +1,11 @@
 /* mock accounts for login */
+
+import { generateToken } from '@/util/jwt'
+
 const userLoginData = [
   {
     username: 'admin',
-    password: 'admin'
+    password: '123456'
   },
   {
     username: 'guest',
@@ -26,14 +29,16 @@ const userMap = {
     status: 200,
     message: 'mock admin login success',
     data: {
-      token: 'admin-mock-token'
+      accessToken: undefined,
+      refreshToken: undefined
     }
   },
   guest: {
     status: 200,
     message: 'mock guest login success',
     data: {
-      token: 'guest-mock-token'
+      accessToken: undefined,
+      refreshToken: undefined
     }
   }
 }
@@ -46,6 +51,8 @@ export default {
       if (userLoginData[i].username === user.username) {
         userExist = true
         if (userLoginData[i].password === user.password) {
+          userMap[userLoginData[i].username].data.accessToken = generateToken(global.accessExpiration, 'admin', global.jwtSecret)
+          userMap[userLoginData[i].username].data.refreshToken = generateToken(global.refreshExpiration, 'admin', global.jwtSecret)
           return userMap[userLoginData[i].username]
         } else {
           return accountPasswordWrong

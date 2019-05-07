@@ -24,13 +24,11 @@ export default {
   methods: {
     getBreadcrumb () {
       let matched = this.$route.matched.filter(breadcrumb => breadcrumb.name)
-      console.log(this.$route.matched)
       const home = matched[0]
       if (home && home.name.trim().toLocaleLowerCase() !== 'home'.toLocaleLowerCase()) {
         matched = [{name: 'home', path: '/'}].concat(matched)
       }
       this.breadcrumbList = matched
-      console.log(this.breadcrumbList)
     }
   },
   watch: {

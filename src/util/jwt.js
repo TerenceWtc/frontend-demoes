@@ -1,8 +1,21 @@
-const jwt = require('jwt-decode')
+var jwt = require('jsonwebtoken')
 
-// verify whether token is expired
+export function generateToken (exp, data, secret) {
+  return jwt.sign({
+    exp: Math.floor(Date.now() / 1000) + exp,
+    data: data
+  }, secret)
+}
+
 export function verify (accessToken) {
-  let now = new Date().getTime()
-  let decode = jwt(accessToken)
-  return (now / 1000) > decode.exp
+  try {
+    jwt.verify(accessToken, global.jwtSecret)
+  } catch (err) {
+    return true
+  }
+  return false
+}
+
+export function decode (accessToken) {
+  return jwt.verify(accessToken, global.jwtSecret).data
 }

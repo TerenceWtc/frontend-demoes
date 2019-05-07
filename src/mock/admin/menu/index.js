@@ -1,6 +1,7 @@
-const menuMap = {
+import { decode } from '@/util/jwt'
+
+const menuData = {
   admin: {
-    status: 200,
     menu: [
       {
         title: 'introduction',
@@ -25,7 +26,6 @@ const menuMap = {
     ]
   },
   guest: {
-    status: 200,
     menu: [
       {
         title: 'introduction',
@@ -43,9 +43,17 @@ const menuMap = {
   }
 }
 
+const menuMap = {
+  status: 200,
+  message: 'success',
+  data: undefined
+}
+
 export default {
   GetMenuList: config => {
-    const token = config.url.split('?')[1].split('token=')[1].split('-')[0]
-    return menuMap[token]
+    const token = config.url.split('?')[1].split('accessToken=')[1]
+    let data = decode(token)
+    menuMap.data = menuData[data].menu
+    return menuMap
   }
 }

@@ -1,27 +1,33 @@
-const userInfoMap = {
+import { decode } from '@/util/jwt'
+
+const userData = {
   admin: {
-    status: 200,
-    message: 'success',
-    data: {
-      userId: 1,
-      userName: 'admin',
-      roles: ['admin']
-    }
+    userId: 1,
+    username: 'admin',
+    name: 'Admin',
+    groupId: 1,
+    groupName: 'admin'
   },
   guest: {
-    status: 200,
-    message: 'success',
-    data: {
-      userId: 2,
-      userName: 'guest',
-      roles: ['guest']
-    }
+    userId: 2,
+    username: 'guest',
+    name: 'Guest',
+    groupId: 2,
+    groupName: 'guest'
   }
+}
+
+const userInfoMap = {
+  status: 200,
+  message: 'success',
+  data: undefined
 }
 
 export default {
   GetUserInfo: config => {
-    const token = config.url.split('?')[1].split('token=')[1].split('-')[0]
-    return userInfoMap[token]
+    let token = config.url.split('?')[1].split('accessToken=')[1]
+    let data = decode(token)
+    userInfoMap.data = userData[data]
+    return userInfoMap
   }
 }

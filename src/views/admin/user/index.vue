@@ -63,7 +63,6 @@ export default {
   methods: {
     getList () {
       this.loading = true
-      console.log(this.pageVo)
       let param = JSON.stringify(this.pageVo)
       param = encodeURIComponent(param)
       userList(param).then(response => {
