@@ -67,7 +67,7 @@ export default {
       param = encodeURIComponent(param)
       userList(param).then(response => {
         this.tableData = response.data.rows
-        this.total = response.data.total
+        this.pageVo.total = response.data.total
         this.loading = false
       })
     },

@@ -22,6 +22,11 @@ const menuData = {
         title: 'line',
         code: 'demoes/line',
         icon: 'chart'
+      },
+      {
+        title: 'userManagement',
+        code: 'admin/user/index',
+        icon: 'chart'
       }
     ]
   },

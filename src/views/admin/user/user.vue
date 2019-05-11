@@ -2,15 +2,17 @@
   <div>
     <el-dialog :title="type"
     :visible.sync="visible"
-    :close-on-click-modal="false">
-      <el-form :model="userForm" :rules="type === 'Create' ? userRules : userRulesWithoutPwd" ref="userForm" :validate-on-rule-change="false">
+    :close-on-click-modal="false"
+    :before-close="closeDialog">
+      <el-form :model="userForm" :rules="type == 'Create' ? userRules : userRulesWithoutPwd" ref="userForm" :validate-on-rule-change="false">
         <el-form-item prop="username" :label="$t('label.username')">
           <el-input class="width_260" type="text" v-model="userForm.username" :disabled="type != 'Create'" :placeholder="$t('placeholder.username')"/>
         </el-form-item>
-        <el-form-item prop="password" v-show="type == 'Create'" :label="$t('label.password')">
+        <!-- do not use 'v-show' tag, it will lose data binding -->
+        <el-form-item prop="password" v-if="type == 'Create'" :label="$t('label.password')">
           <el-input class="width_260" type="password" v-model="userForm.password" :placeholder="$t('placeholder.password')"/>
         </el-form-item>
-        <el-form-item prop="confirmPass" v-show="type == 'Create'" :label="$t('label.confirmPass')">
+        <el-form-item prop="confirmPass" v-if="type == 'Create'" :label="$t('label.confirmPass')">
           <el-input class="width_260" type="password" v-model="userForm.confirmPass" :placeholder="$t('placeholder.confirmPass')"/>
         </el-form-item>
         <el-form-item prop="name" :label="$t('label.name')">
@@ -25,12 +27,12 @@
         <el-form-item prop="mobile" :label="$t('label.mobile')">
           <el-input class="width_260" type="text" v-model="userForm.mobile" :disabled="type == 'Detail'" :placeholder="$t('placeholder.mobile')"/>
         </el-form-item>
-        <!-- <el-form-item prop="group" :label="$t('label.group')">
-          <el-input class="width_260" type="text" v-model="userForm.group" :disabled="type == 'Detail'" :placeholder="$t('placeholder.group')"/>
-        </el-form-item> -->
-        <el-form-item prop="group" :label="$t('label.group')">
-          <el-select v-model="selectedGroup" placeholder="请选择">
-            <el-option v-for="item in groupList" :key="item.id" :label="item.name" :value="item.name"/>
+        <el-form-item prop="groupName" v-if="type == 'Detail'" :label="$t('label.group')">
+          <el-input class="width_260" type="text" v-model="userForm.groupName" :disabled="type == 'Detail'"/>
+        </el-form-item>
+        <el-form-item prop="groupName" v-if="type != 'Detail'" :label="$t('label.group')">
+          <el-select v-model="userForm.groupName" placeholder="请选择">
+            <el-option v-for="item in groupList" :key="item.name" :label="item.name" :value="item.name"/>
           </el-select>
         </el-form-item>
       </el-form>
@@ -46,23 +48,23 @@
 <script>
 import { addObj, updateObj } from '@/api/admin/user'
 import { password, email } from '@/util/validate'
-import { verifyUsername } from '@/api/auth/login'
+// import { verifyUsername } from '@/api/auth/login'
 import { groupIdAndName } from '@/api/admin/group'
 
 export default {
   name: 'user-template',
   data () {
-    const validateUsername = async (rule, value, callback) => {
-      let result = false
-      await verifyUsername(this.userForm.username).then(response => {
-        result = response.data
-      })
-      if (result) {
-        callback(new Error(this.$t('regex.duplicateUsername')))
-      } else {
-        callback()
-      }
-    }
+    // const validateUsername = async (rule, value, callback) => {
+    //   let result = false
+    //   await verifyUsername(this.userForm.username).then(response => {
+    //     result = response.data
+    //   })
+    //   if (result) {
+    //     callback(new Error(this.$t('regex.duplicateUsername')))
+    //   } else {
+    //     callback()
+    //   }
+    // }
     const validatePwd = (rule, value, callback) => {
       if (password(value)) {
         callback(new Error(this.$t('regex.specialPwd')))
@@ -95,10 +97,10 @@ export default {
         email: '',
         gender: '',
         mobile: '',
-        group: ''
+        group: '',
+        groupName: ''
       },
       groupList: [],
-      selectedGroup: undefined,
       userRules: {
         username: [
           {
@@ -111,10 +113,10 @@ export default {
             max: 20,
             message: this.$t('regex.length4to20'),
             trigger: 'blur'
-          },
-          {
-            validator: validateUsername,
-            trigger: 'blur'
+          // },
+          // {
+          //   validator: validateUsername,
+          //   trigger: 'blur'
           }
         ],
         password: [
@@ -194,8 +196,6 @@ export default {
     showAdd () {
       this.visible = true
       this.type = global.create
-      // update DOM
-      this.$nextTick(() => this.reset())
     },
     addHandler () {
       this.$refs['userForm'].validate((valid) => {
@@ -213,15 +213,16 @@ export default {
       this.visible = true
       this.type = global.update
       this.$nextTick(() => {
-        this.reset()
         this.userForm = userObj
       })
     },
     updateHandler () {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {
+          console.log(this.userForm)
           updateObj(this.userForm).then(() => {
             this.visible = false
+            this.reset()
             this.$parent.getList()
           })
         } else {
@@ -233,25 +234,20 @@ export default {
       this.visible = true
       this.type = global.detail
       this.$nextTick(() => {
-        this.reset()
         this.userForm = userObj
       })
     },
     reset () {
-      this.$refs['userForm'].resetFields()
+      this.$nextTick(() => {
+        this.$refs['userForm'].resetFields()
+        this.userForm.password = ''
+      })
+    },
+    closeDialog (done) {
+      this.reset()
+      done()
     }
   }
-  // computed: {
-  //   ruleList: function () {
-  //     if (this.type === global.create) {
-  //       console.log(this.type)
-  //       return this.userRules
-  //     } else {
-  //       console.log(this.type)
-  //       return this.userRulesWithoutPwd
-  //     }
-  //   }
-  // }
 }
 </script>
 
