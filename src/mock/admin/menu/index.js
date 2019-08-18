@@ -27,6 +27,11 @@ const menuData = {
         title: 'userManagement',
         code: 'admin/user/index',
         icon: 'chart'
+      },
+      {
+        title: '2048',
+        code: 'games/2048/index',
+        icon: 'chart'
       }
     ]
   },

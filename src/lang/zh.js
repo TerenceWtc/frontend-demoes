@@ -1,5 +1,6 @@
 export default {
   label: {
+    2048: '2048',
     age: '年龄',
     checkbox: '复选框',
     confirmPass: '确认',

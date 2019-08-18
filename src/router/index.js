@@ -74,6 +74,17 @@ export default new Router({
         }
       ]
     },
+    {
+      path: '/games',
+      component: layout,
+      children: [
+        {
+          path: '2048/index',
+          name: 'game2048',
+          component: resolve => require(['@/views/games/2048/index'], resolve)
+        }
+      ]
+    },
     // {
     //   path: '/home',
     //   name: 'home',
