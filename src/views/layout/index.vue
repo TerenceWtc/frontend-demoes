@@ -5,7 +5,7 @@
         <el-aside class="asidebar" :class="{hideSidebar: !sidebar.opened}">
           <sidebar class="sidebar-container"/>
         </el-aside>
-        <el-main>
+        <el-main class="main-container">
           <navbar class="navbar-container"/>
           <contents class="contents-container"/>
         </el-main>

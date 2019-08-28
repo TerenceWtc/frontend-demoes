@@ -1,27 +1,45 @@
 <template>
-  <div>
+  <v-touch class="touch-container"
+    @swipeleft="swipe(0)"
+    @swiperight="swipe(2)"
+    @swipeup="swipe(3)"
+    @swipedown="swipe(1)"
+  >
     <div>
-      <el-button @click="newGame">New Game</el-button>
+      Matrix:
+      <el-select v-model="order" @change="newGame">
+        <el-option
+          v-for="item in orderAarray"
+          :key="item"
+          :label="item"
+          :value="item"
+        />
+      </el-select>
+      <el-button @click="newGame">New Game</el-button><br/>
       <span>Score: {{score}}</span>
+      <span>High Score: {{highScore}}</span>
     </div>
     <div :class="'container' + order">
-      <div class="background">
-        <div v-for="(item, index) in order * order" :key="index"></div>
-      </div>
-      <div :class="'box' + order">
+      <div class="box">
         <div class="row" v-for="(squareRows, index) in squareMatrix" :key="index">
           <div v-for="(square, index) in squareRows" :key="index">
             <square :value="square"/>
           </div>
         </div>
       </div>
-
     </div>
-  </div>
+    <!-- <el-button @click="flag = !flag">appear</el-button>
+    <el-button @click="() => x+=100">move right</el-button>
+    <span v-if="flag">
+      <square :class="flag ? 'appear' : ''" v-if="flag" :value="2"/>
+    </span>
+    <square :style="`transform:translate(${x}px,${y}px); transition: 0.3s`" :value="4"/> -->
+  </v-touch>
 </template>
 
 <script>
 import Square from './square'
+import { message } from '@/util/message'
 
 let n = 4
 
@@ -33,9 +51,13 @@ export default {
   data () {
     return {
       order: 4,
+      orderAarray: [4, 5, 6, 7, 8],
       squareMatrix: [],
-      sss: 1,
-      score: 0
+      score: 0,
+      highScore: 0,
+      flag: true,
+      x: 0,
+      y: 0
     }
   },
   created () {
@@ -45,8 +67,8 @@ export default {
     // 全局监听键盘事件
     // ↑38ArrowUp ↓40ArrowDown ←37ArrowLeft →39ArrowRight
     document.onkeyup = (e) => {
+      let old = this.squareMatrix.toString()
       let keyBoard = e.key
-      const old = this.squareMatrix.toString()
       if (keyBoard === 'ArrowUp') {
         this.slide(3)
       } else if (keyBoard === 'ArrowDown') {
@@ -57,19 +79,17 @@ export default {
         this.slide(2)
       } else {
         // other key
-      }
-      if (old === this.squareMatrix.toString()) {
-        console.log('no change')
-        // TODO: msg
         return
       }
-      this.add()
+      this.operation(old)
     }
   },
   methods: {
     newGame () {
       // 初始化游戏
       n = this.order
+      this.highScore = localStorage.getItem('highScore') === undefined ? 0 : localStorage.getItem('highScore')
+      this.score = 0
       // for (let i = 0; i < n; i++) {
       //   this.$set(this.squareMatrix, i, [])
       //   for (let j = 0; j < n; j++) {
@@ -87,10 +107,17 @@ export default {
       this.add()
       this.add()
     },
+    operation (old) {
+      if (old === this.squareMatrix.toString()) {
+        message('No changes')
+        return
+      }
+      this.add()
+    },
     randomIndex () {
       // 生成下标随机数
-      let index = Math.round(Math.random() * 15)
-      if (this.squareMatrix[(Math.floor(index / 4))][(index % 4)] !== 0) {
+      let index = Math.round(Math.random() * (n * n - 1))
+      if (this.squareMatrix[(Math.floor(index / n))][(index % n)] !== 0) {
         index = this.randomIndex()
       }
       return index
@@ -103,8 +130,15 @@ export default {
       // 添加方块
       let index = this.randomIndex()
       let value = this.randomNumber()
-      this.squareMatrix[(Math.floor(index / 4))][(index % 4)] = value
+      this.squareMatrix[(Math.floor(index / n))][(index % n)] = value
       this.score = this.score + value
+      if (this.score > this.highScore) {
+        this.highScore = this.score
+        localStorage.setItem('highScore', this.highScore)
+      }
+      if (this.isFull()) {
+        message('Game Over!', 'error', 0, true)
+      }
     },
     isFull () {
       // 没有0
@@ -116,6 +150,23 @@ export default {
         }
       }
       // 没有两个相邻的且值相等的
+      // 横向判断
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n - 1; j++) {
+          if (this.squareMatrix[i][j] === this.squareMatrix[i][j + 1]) {
+            return false
+          }
+        }
+      }
+      // 纵向判断
+      for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n; j++) {
+          if (this.squareMatrix[i][j] === this.squareMatrix[i + 1][j]) {
+            return false
+          }
+        }
+      }
+      return true
     },
     matrixTranspose (matrix, times) {
       // 矩阵转置
@@ -178,6 +229,11 @@ export default {
         index = index - 1
       }
       return index
+    },
+    swipe (value) {
+      let old = this.squareMatrix.toString()
+      this.slide(value)
+      this.operation(old)
     }
   }
 }
@@ -186,20 +242,12 @@ export default {
 <style lang="scss" scoped>
 $defaultLength: 77px;
 
+.touch-container {
+  height: 100%;
+  width: 100%;
+}
+
 .container {
-  &4 {
-    height: 4 * $defaultLength + 2;
-    width: 4 * $defaultLength + 2;
-  }
-  &5 {
-    height: 5 * $defaultLength;
-    width: 5 * $defaultLength;
-  }
-}
-.box {
-  background-color: #87CEFA;
-}
-.box {
   &4 {
     height: 4 * $defaultLength;
     width: 4 * $defaultLength;
@@ -208,6 +256,21 @@ $defaultLength: 77px;
     height: 5 * $defaultLength;
     width: 5 * $defaultLength;
   }
+  &6 {
+    height: 6 * $defaultLength;
+    width: 6 * $defaultLength;
+  }
+  &7 {
+    height: 7 * $defaultLength;
+    width: 7 * $defaultLength;
+  }
+  &8 {
+    height: 8 * $defaultLength;
+    width: 8 * $defaultLength;
+  }
+}
+.box {
+  background-color: #87CEFA;
 }
 .row {
   display: flex;
@@ -215,4 +278,19 @@ $defaultLength: 77px;
   justify-content: space-between;
   align-items: stretch;
 }
+
+// square appear css
+.appear {
+  animation: appear-in .3s;
+}
+
+@keyframes appear-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+// square appear css
 </style>

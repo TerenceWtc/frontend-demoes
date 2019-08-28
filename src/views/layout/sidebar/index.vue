@@ -1,10 +1,10 @@
 <template>
   <div>
+    <!-- :collapse="!sidebar.opened" -->
     <el-menu mode="vertical"
     background-color="#545c64"
     text-color="#fff"
     active-text-color="#ffd04b"
-    :collapse="!sidebar.opened"
     :router="routerTrue">
       <!-- <el-menu-item v-for="item in menus" :index="'/' + item.code" :key="item.code">
         <svg-icon :name="item.icon" :iconClass="`svg-icon svg-white`"/>

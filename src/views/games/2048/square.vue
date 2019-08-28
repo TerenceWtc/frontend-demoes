@@ -1,6 +1,6 @@
 <template>
-  <div class="square-container" :class="'color' + value">
-    <span>{{value === 0 ? '' : value}}</span>
+  <div class="square-container text-shadow" :class="'color' + value">
+    {{value === 0 ? '' : value}}
   </div>
 </template>
 
@@ -22,6 +22,8 @@ export default {
   margin: 1px;
   height: 75px;
   width: 75px;
+  justify-content: center;
+  align-items: center;
 }
 .color {
   &0 {
@@ -73,5 +75,9 @@ export default {
   &32768 {
     background-color: $Red;
   }
+}
+.text-shadow{
+  color: $White;
+  font-size: 20px;
 }
 </style>

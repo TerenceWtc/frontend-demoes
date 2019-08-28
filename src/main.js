@@ -11,6 +11,7 @@ import i18n from './lang'
 import SvgIcon from '@/components/SvgIcon'
 import '@/global'
 import { refresh } from '@/api/auth/refresh'
+import VueTouch from 'vue-touch'
 
 // white list for not redirection
 const whiteList = ['/login']
@@ -48,6 +49,8 @@ Vue.config.productionTip = false
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value)
 })
+
+Vue.use(VueTouch, {name: 'v-touch'})
 
 Vue.component('svg-icon', SvgIcon)
 

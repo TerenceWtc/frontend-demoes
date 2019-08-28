@@ -1,6 +1,5 @@
-// TODO: test
 $SIDE_WIDTH: 260px;
-$SIDE_REMAIN_WIDTH: 65px;
+$SIDE_REMAIN_WIDTH: 0px;
 
 .el-container {
   height: 100%;
@@ -29,10 +28,16 @@ $SIDE_REMAIN_WIDTH: 65px;
   height: 100%;
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .navbar-container {
   width: 100%;
 }
 
 .contents-container {
+  flex: 1;
   margin: 0 10px;
 }
